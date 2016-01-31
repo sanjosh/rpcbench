@@ -44,9 +44,11 @@ int main(int argc, char* argv[])
   auto cap = client.bootstrap().castAs<benchmark::Database>();
 
   auto start = std::chrono::high_resolution_clock::now();
+  char str[] = "abcdefgh";
   for (int64_t i = 0; i < loopCount ; i++)
   {
     auto req = cap.getRequest();
+    req.setKey(::capnp::Data::Reader(reinterpret_cast<const kj::byte*>(str), 8));
     auto p = req.send();
     p.wait(ioContext.waitScope);
   }
