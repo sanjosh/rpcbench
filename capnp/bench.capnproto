@@ -1,0 +1,8 @@
+@0xfdfb75d15a2b9b56;
+
+using Cxx = import "/capnp/c++.capnp";
+$Cxx.namespace("benchmark");
+
+interface Database {
+    get @0 (key : Data) -> (value : Data);
+}
