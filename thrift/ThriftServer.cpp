@@ -21,7 +21,10 @@ class DatabaseHandler : virtual public DatabaseIf {
   DatabaseHandler() {
   }
 
-  void get(std::string& _return, const std::string& data) {
+  void get(const std::string& _return, const std::string& data) {
+  }
+
+  void sync_get(std::string& _return, const std::string& data) {
     _return = data;
   }
 

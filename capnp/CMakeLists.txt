@@ -15,6 +15,6 @@ SET(SOURCES CapnpServer.cpp CapnpClient.cpp bench.capnproto.cpp)
 ADD_EXECUTABLE(CapnpServer CapnpServer.cpp bench.capnproto.c++)
 ADD_EXECUTABLE(CapnpClient CapnpClient.cpp bench.capnproto.c++)
 
-TARGET_LINK_LIBRARIES(CapnpServer capnp-rpc capnp kj-async kj)
-TARGET_LINK_LIBRARIES(CapnpClient capnp-rpc capnp kj-async kj)
+TARGET_LINK_LIBRARIES(CapnpServer capnp-rpc capnp kj-async kj tcmalloc)
+TARGET_LINK_LIBRARIES(CapnpClient capnp-rpc capnp kj-async kj tcmalloc)
   

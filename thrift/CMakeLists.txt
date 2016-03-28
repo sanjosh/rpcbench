@@ -15,5 +15,5 @@ SET(SOURCES ThriftServer.cpp ThriftClient.cpp gen-cpp/bench_constants.cpp gen-cp
 ADD_EXECUTABLE(ThriftServer ThriftServer.cpp gen-cpp/bench_constants.cpp gen-cpp/bench_types.cpp gen-cpp/Database.cpp)
 ADD_EXECUTABLE(ThriftClient ThriftClient.cpp gen-cpp/bench_constants.cpp gen-cpp/bench_types.cpp gen-cpp/Database.cpp)
 
-TARGET_LINK_LIBRARIES(ThriftServer thrift)
-TARGET_LINK_LIBRARIES(ThriftClient thrift)
+TARGET_LINK_LIBRARIES(ThriftServer thrift tcmalloc)
+TARGET_LINK_LIBRARIES(ThriftClient thrift tcmalloc)
