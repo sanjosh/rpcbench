@@ -31,7 +31,7 @@ class SessionImpl : public benchmark::Database::Server
 
 int main(int argc, char* argv[])
 {
-  std::string addr_ = "localhost";
+  std::string addr_ = "*";
   int port_ = 8888;
 
   auto ioContext = kj::setupAsyncIo();

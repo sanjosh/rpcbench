@@ -67,8 +67,8 @@ int main(int argc, char* argv[])
 
   std::cout
     << "loopcount=" << loopCount
-    << ":time=" << duration
-    << ":latency=" << duration/loopCount << " microsec"
+    << ":time=" << duration << " microsec"
+    << ":thruput=" << (loopCount * 1000000)/duration << " requests/sec"
     << std::endl;
 }
 
