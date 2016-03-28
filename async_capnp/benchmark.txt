@@ -1,0 +1,120 @@
+
+Results of running AsyncCapnpClient against AsyncCapnpServer 
+On 20 core machine
+with git commit sha = e4685819e
+
+$ git clone http://github.com/sanjosh/rpcbench
+
+$ cd rpcbench
+$ cmake .
+$ make
+$ cd async_capnp
+
+$ ls -l 
+total 392
+-rwxrwxr-x 1 -- -- 212667 Mar 28 16:35 AsyncCapnpClient
+-rwxrwxr-x 1 -- --  99509 Mar 28 16:32 AsyncCapnpServer
+-rw-rw-r-- 1 -- --    157 Mar 28 16:27 bench.capnproto
+-rw-rw-r-- 1 -- --   8784 Mar 28 16:31 bench.capnproto.c++
+-rw-rw-r-- 1 -- --   8784 Mar 28 16:31 bench.capnproto.cpp
+-rw-rw-r-- 1 -- --  12655 Mar 28 16:31 bench.capnproto.h
+-rw-rw-r-- 1 -- --   4127 Mar 28 16:50 benchmark.txt
+-rw-rw-r-- 1 -- --   1806 Mar 28 16:35 CapnpClient.cpp
+-rw-rw-r-- 1 -- --    943 Mar 28 16:32 CapnpServer.cpp
+drwxrwxr-x 4 -- --   4096 Mar 28 16:31 CMakeFiles
+-rw-rw-r-- 1 -- --   1154 Mar 28 16:30 cmake_install.cmake
+-rw-rw-r-- 1 -- --    660 Mar 28 16:30 CMakeLists.txt
+-rw-rw-r-- 1 -- --   8489 Mar 28 16:30 Makefile
+
+$ ./AsyncCapnpServer&
+
+$ for i in {1..n}
+do
+./AsyncCapnpClient 127.0.0.1 100000&
+done
+
+n  : request/sec 
+------------------
+1  : 37322
+2  : 58619
+4  : 80756
+8  : 84614
+16 : 83693
+
+==========================================================================
+
+System Config
+
+$ Linux ubuntu 3.19.0-25-generic #26~14.04.1-Ubuntu SMP Fri Jul 24 21:16:20 UTC 2015 x86_64 x86_64 x86_64 GNU/Linu
+
+$ free -m
+             total       used       free     shared    buffers     cached
+Mem:        257853      24890     232963          3        450      22770
+-/+ buffers/cache:       1669     256184
+Swap:       262045         93     261952
+
+$ cat /proc/cpuinfo
+
+processor : 39
+vendor_id : GenuineIntel
+cpu family  : 6
+model   : 63
+model name  : Intel(R) Xeon(R) CPU E5-2650 v3 @ 2.30GHz
+stepping  : 2
+microcode : 0x31
+cpu MHz   : 1213.609
+cache size  : 25600 KB
+physical id : 1
+siblings  : 20
+core id   : 12
+cpu cores : 10
+apicid    : 57
+initial apicid  : 57
+fpu   : yes
+fpu_exception : yes
+cpuid level : 15
+wp    : yes
+flags   : fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid dca sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt
+bugs    :
+bogomips  : 4601.08
+clflush size  : 64
+cache_alignment : 64
+address sizes : 46 bits physical, 48 bits virtual
+power management:
+
+
+
+$ ldd ./AsyncCapnpServer 
+  linux-vdso.so.1 =>  (0x00007ffd9bb47000)
+  libcapnp-rpc-0.6-dev.so => /usr/local/lib/libcapnp-rpc-0.6-dev.so (0x00007f7b1e8b5000)
+  libcapnp-0.6-dev.so => /usr/local/lib/libcapnp-0.6-dev.so (0x00007f7b1e628000)
+  libkj-async-0.6-dev.so => /usr/local/lib/libkj-async-0.6-dev.so (0x00007f7b1e3e7000)
+  libkj-0.6-dev.so => /usr/local/lib/libkj-0.6-dev.so (0x00007f7b1e1be000)
+  libtcmalloc.so.4 => /usr/lib/libtcmalloc.so.4 (0x00007f7b1df53000)
+  libstdc++.so.6 => /usr/lib/x86_64-linux-gnu/libstdc++.so.6 (0x00007f7b1dc46000)
+  libgcc_s.so.1 => /lib/x86_64-linux-gnu/libgcc_s.so.1 (0x00007f7b1da2f000)
+  libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007f7b1d66a000)
+  /lib64/ld-linux-x86-64.so.2 (0x00007f7b1eb6f000)
+  libpthread.so.0 => /lib/x86_64-linux-gnu/libpthread.so.0 (0x00007f7b1d44c000)
+  libunwind.so.8 => /usr/lib/x86_64-linux-gnu/libunwind.so.8 (0x00007f7b1d231000)
+  libm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x00007f7b1cf2b000)
+  liblzma.so.5 => /lib/x86_64-linux-gnu/liblzma.so.5 (0x00007f7b1cd09000)
+  libdl.so.2 => /lib/x86_64-linux-gnu/libdl.so.2 (0x00007f7b1cb05000)
+
+$ ldd ./AsyncCapnpClient 
+  linux-vdso.so.1 =>  (0x00007ffed7e70000)
+  libcapnp-rpc-0.6-dev.so => /usr/local/lib/libcapnp-rpc-0.6-dev.so (0x00007fa17e8ee000)
+  libcapnp-0.6-dev.so => /usr/local/lib/libcapnp-0.6-dev.so (0x00007fa17e661000)
+  libkj-async-0.6-dev.so => /usr/local/lib/libkj-async-0.6-dev.so (0x00007fa17e420000)
+  libkj-0.6-dev.so => /usr/local/lib/libkj-0.6-dev.so (0x00007fa17e1f7000)
+  libtcmalloc.so.4 => /usr/lib/libtcmalloc.so.4 (0x00007fa17df8c000)
+  libstdc++.so.6 => /usr/lib/x86_64-linux-gnu/libstdc++.so.6 (0x00007fa17dc7f000)
+  libgcc_s.so.1 => /lib/x86_64-linux-gnu/libgcc_s.so.1 (0x00007fa17da68000)
+  libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007fa17d6a3000)
+  /lib64/ld-linux-x86-64.so.2 (0x00007fa17eba8000)
+  libpthread.so.0 => /lib/x86_64-linux-gnu/libpthread.so.0 (0x00007fa17d485000)
+  libunwind.so.8 => /usr/lib/x86_64-linux-gnu/libunwind.so.8 (0x00007fa17d26a000)
+  libm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x00007fa17cf64000)
+  liblzma.so.5 => /lib/x86_64-linux-gnu/liblzma.so.5 (0x00007fa17cd42000)
+  libdl.so.2 => /lib/x86_64-linux-gnu/libdl.so.2 (0x00007fa17cb3e000)
+
