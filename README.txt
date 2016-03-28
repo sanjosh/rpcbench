@@ -18,3 +18,8 @@ $ ./CapnpServer&
 $ ./CapnpClient localhost 100000
 loopcount=100000:time=11922413:latency=119 microsec
 
+
+For async_capnp
+$ cd async_capnp
+$ ./AsyncCapnpServer&
+$ ./AsyncCapnpClient localhost 100000
